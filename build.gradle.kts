@@ -1,12 +1,17 @@
 plugins {
-    id("com.android.library")  // Added version number
-    id("org.jetbrains.kotlin.android") version "1.9.0" // Added version number
+    id("com.android.library") version "8.5.2" // Ensure that the plugin version is specified
+    id("org.jetbrains.kotlin.android") version "1.9.0"
     id("maven-publish")
 }
 
 android {
     namespace = "com.transactpay.transactpay_android"
     compileSdk = 34
+
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 34
+    }
 
     buildTypes {
         getByName("release") {
@@ -41,20 +46,17 @@ android {
         }
     }
 
-    // Wrapper task moved outside of android block
-    tasks.register<Wrapper>("wrapper") {
-        gradleVersion = "8.10" // Specify the Gradle version you want to use
-    }
-
     lint {
         targetSdk = 34
     }
 
     testOptions {
-        unitTests {
-            targetSdk = 34
-        }
+        unitTests.isIncludeAndroidResources = true
     }
+}
+
+tasks.register<Wrapper>("wrapper") {
+    gradleVersion = "8.10"
 }
 
 afterEvaluate {
@@ -112,21 +114,20 @@ dependencies {
     implementation("javax.xml.parsers:jaxp-api:1.4.5")
     implementation("com.squareup.picasso:picasso:2.8")
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.appcompat)
+    implementation("androidx.core:core-ktx:1.10.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0")
+    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3:1.1.0")
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
