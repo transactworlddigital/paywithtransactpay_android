@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">transactpay_android_sdk</string>
+    <string-array name="modes_array">
+        <item>Live</item>
+        <item>Test</item>
+    </string-array>
+</resources>

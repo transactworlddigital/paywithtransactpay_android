@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/transactpay"
+                />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"> <!-- Add margin to separate from ImageView -->
+
+            <TextView
+                android:id="@+id/merchantNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold"
+             />
+
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_gravity="right"
+               >
+               <TextView
+                   android:text="Pay"
+                   android:layout_width="wrap_content"
+                   android:gravity="end"
+                   android:layout_height="wrap_content"
+                   android:textSize="12sp"
+                   android:layout_marginRight="10dp"
+                   android:background="@drawable/rounded_background"
+                   android:textColor="#FFFFFF"/> <!-- White text color -->
+               <!-- White text color -->
+
+               <TextView
+                   android:id="@+id/amountTextView"
+                   android:layout_width="wrap_content"
+                   android:gravity="end"
+                   android:textStyle="bold"
+                   android:textColor="@color/transactpay"
+                   android:layout_height="wrap_content"
+                   android:textSize="18sp"
+                   />
+           </LinearLayout>
+
+            <TextView
+                android:id="@+id/emailTextView"
+                android:layout_width="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="end"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3" /> <!-- Light grey color -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:text="Choose a payment option"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3" /> <!-- Light grey color -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:id="@+id/openCard"> <!-- Set the onClick method -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Card"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/card_24"
+                android:layout_marginBottom="15dp"
+                android:drawablePadding="8dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/mastercard" />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/visa" />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/verve" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/Banktrasfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:text="Bank Transfer"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:drawableStart="@drawable/baseline_near_me_24"
+            android:drawablePadding="8dp" /> <!-- Adjust padding as needed -->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/showFees"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Transaction fee"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            />
+
+        <TextView
+            android:id="@+id/thisFee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/transactpay"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textSize="12sp"
+            android:text="fee will be added your final bill"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:gravity="bottom"
+            android:layout_marginBottom="20dp"
+            >
+
+            <Button
+                android:id="@+id/makePayment"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:layout_marginTop="15dp"
+                android:text="Continue"
+                android:background="@drawable/rounded_button"
+                />
+
+
+            <TextView
+                android:id="@+id/changePaymentOption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                android:text="Change payment method"
+                />
+
+            <TextView
+                android:id="@+id/cancelPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:text="Cancel payment"
+                />
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
