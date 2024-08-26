@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("com.android.library")  // Added version number
+    id("org.jetbrains.kotlin.android") version "1.9.0" // Added version number
     id("maven-publish")
 }
 
@@ -41,11 +41,11 @@ android {
         }
     }
 
+    // Wrapper task moved outside of android block
     tasks.register<Wrapper>("wrapper") {
         gradleVersion = "8.10" // Specify the Gradle version you want to use
     }
 
-    // Handling deprecated targetSdk configuration
     lint {
         targetSdk = 34
     }
@@ -55,14 +55,12 @@ android {
             targetSdk = 34
         }
     }
-
 }
 
 afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
-                // Ensure that you're using the correct component
                 from(components["release"])
 
                 groupId = "com.github.Omamuli-Emmanuel"
