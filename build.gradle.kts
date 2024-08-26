@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library") version "8.5.2" // Ensure that the plugin version is specified
-    id("org.jetbrains.kotlin.android") version "1.9.0"
+    id("com.android.library") // Do not specify version to allow Gradle to use the latest available
+    id("org.jetbrains.kotlin.android") version "1.9.0" // Ensure you have the correct version
     id("maven-publish")
 }
 
@@ -56,7 +56,7 @@ android {
 }
 
 tasks.register<Wrapper>("wrapper") {
-    gradleVersion = "8.10"
+    gradleVersion = "8.1" // Ensure this is set to a stable and available version
 }
 
 afterEvaluate {
