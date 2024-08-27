@@ -60,8 +60,10 @@ id shopName
 id showFees
 id thisFee
 id viewAccount
+id webview
 layout activity_card
 layout bank_transfer
+layout cardauthentication
 layout processingpage
 layout selectbank
 layout spinner_item

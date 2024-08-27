@@ -183,7 +183,7 @@ class PayWithTransactpay : AppCompatActivity() {
                         "currency": "NGN"
                     },
                     "payment": {
-                        "RedirectUrl": "https://www.hi.com"
+                        "RedirectUrl": ""
                     }
                 }
             """.trimIndent()

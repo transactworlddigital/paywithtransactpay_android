@@ -59,8 +59,10 @@ int id shopName 0x0
 int id showFees 0x0
 int id thisFee 0x0
 int id viewAccount 0x0
+int id webview 0x0
 int layout activity_card 0x0
 int layout bank_transfer 0x0
+int layout cardauthentication 0x0
 int layout processingpage 0x0
 int layout selectbank 0x0
 int layout spinner_item 0x0

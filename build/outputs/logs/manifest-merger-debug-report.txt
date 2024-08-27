@@ -1,7 +1,7 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:2:1-35:12
-INJECTED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:2:1-35:12
+ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:2:1-40:12
+INJECTED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:2:1-40:12
 	package
 		INJECTED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml
 	xmlns:android
@@ -11,7 +11,7 @@ ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_an
 	android:name
 		ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:4:22-64
 application
-ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:6:5-33:19
+ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:6:5-38:19
 activity#com.transactpay.transactpay_android.Transactpay_start
 ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:8:9-12:68
 	android:label
@@ -54,6 +54,14 @@ ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_an
 		ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:32:13-65
 	android:name
 		ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:30:13-74
+activity#com.transactpay.transactpay_android.CardAuthentication
+ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:34:9-37:68
+	android:label
+		ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:36:13-45
+	android:theme
+		ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:37:13-65
+	android:name
+		ADDED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml:35:13-82
 uses-sdk
 INJECTED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/shippack/StudioProjects/transactpay_android_sdk/transactpay_android/src/main/AndroidManifest.xml

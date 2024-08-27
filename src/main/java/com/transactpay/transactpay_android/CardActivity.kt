@@ -144,7 +144,20 @@ class CardActivity : AppCompatActivity() {
                         if (status == "success") {
                             Log.d(TAG, "API Call Success: $jsonResponse")
                             val data = jsonResponse.getJSONObject("data")
-                            val details = data.getJSONObject("paymentDetail")
+                            val paymentDetail = data.getJSONObject("paymentDetail")
+                            val redirectUrl = paymentDetail.optString("redirectUrl")
+
+                            val cardIntent = Intent(this@CardActivity, CardAuthentication::class.java).apply {
+                                putExtra("Redirect_url", redirectUrl)
+                                putExtra("BASEURL", baseurl)
+                                putExtra("REFERRENCE", reff)
+                                putExtra("APIKEY", apiKey)
+                                putExtra("Encrypt", rsaPublicKeyXml)
+                                putExtra("SUCCESS", success)
+                                putExtra("FAILED", failed)
+                            }
+                            startActivity(cardIntent)
+
                         } else {
                             withContext(Dispatchers.Main) {
                                 // Create an Intent to start the Success Activity
