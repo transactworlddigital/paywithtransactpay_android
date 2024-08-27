@@ -1,15 +1,19 @@
+package com.transactpay.transactpay_android
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.transactpay.transactpay_android.BankTransfer.Companion
 import com.transactpay.transactpay_android.EncryptionUtils
 import com.transactpay.transactpay_android.R
 import com.transactpay.transactpay_android.Transactpay_start
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -32,7 +36,6 @@ class PayWithTransactpay : AppCompatActivity() {
             amount: String,
             email: String,
             apiKey: String,
-            baseUrl: String,
             EncryptionKey: String,
             initiatingActivityClass: Class<*>,
             successClass: Class<*>,
@@ -45,7 +48,6 @@ class PayWithTransactpay : AppCompatActivity() {
                 putExtra("AMOUNT", amount)
                 putExtra("EMAIL", email)
                 putExtra("API_KEY", apiKey)
-                putExtra("BASEURL", baseUrl)
                 putExtra("XMLKEY", EncryptionKey)
                 putExtra("INITIATING_ACTIVITY_CLASS", initiatingActivityClass)
                 putExtra("SUCCESS_CLASS", successClass)
@@ -66,11 +68,11 @@ class PayWithTransactpay : AppCompatActivity() {
         val amountString = intent.getStringExtra("AMOUNT") ?: "0"
         val email = intent.getStringExtra("EMAIL") ?: ""
         val apiKey = intent.getStringExtra("API_KEY") ?: ""
-        val baseurl = intent.getStringExtra("BASEURL") ?: ""
         val hashKey = intent.getStringExtra("XMLKEY") ?: ""
         val initiatingClass = intent.getSerializableExtra("INITIATING_ACTIVITY_CLASS") as Class<*>
         val successClass = intent.getSerializableExtra("SUCCESS_CLASS") as Class<*>
         val failureClass = intent.getSerializableExtra("FAILURE_CLASS") as Class<*>
+        val baseurl : String = "https://payment-api-service.transactpay.ai/payment"
 
         Log.d(TAG, apiKey)
 
@@ -96,44 +98,57 @@ class PayWithTransactpay : AppCompatActivity() {
                     url, fname, lname, mobile, email, amount, referenceNumber, apiKey, rsaPublicKeyXml
                 )
 
+                Log.d(TAG, "HTTP Response Body: ${response.toString()}")
+
                 val jsonResponse = JSONObject(response)
 
                 Log.d(TAG, "HTTP Response Body: $jsonResponse")
 
                 val status = jsonResponse.getString("status")
 
-                if (status == "success") {
-                    val data = jsonResponse.getJSONObject("data")
-                    val order = data.getJSONObject("order")
-                    val customer = data.getJSONObject("customer")
-                    val subsidiary = data.getJSONObject("subsidiary")
-
-                    Log.d(TAG, "First Reference $referenceNumber")
-
-                    val intent = Intent(this@PayWithTransactpay, Transactpay_start::class.java).apply {
-                        putExtra("Fname", customer.optString("firstName"))
-                        putExtra("Lname", customer.optString("lastName"))
-                        putExtra("Phone", customer.optString("mobile"))
-                        putExtra("MERCHANT_NAME", subsidiary.optString("name"))
-                        putExtra("AMOUNT", order.optString("amount"))
-                        putExtra("EMAIL", customer.optString("email"))
-                        putExtra("REF", referenceNumber)
-                        putExtra("APIKEY", apiKey)
-                        putExtra("BASEURL", baseurl)
-                        putExtra("XMLKEY", hashKey)
-                        putExtra("INITIATING_ACTIVITY_CLASS", initiatingClass)
-                        putExtra("SUCCESS", successClass)
-                        putExtra("FAILED", failureClass)
-                    }
-                    startActivity(intent)
-                } else {
+                if (jsonResponse == null){
+                    // Create an Intent to start the Success Activity
                     val intent = Intent(this@PayWithTransactpay, failureClass).apply {
-                        putExtra("status", jsonResponse.getString("status"))
-                        putExtra("code", jsonResponse.getString("statusCode"))
-                        putExtra("message", jsonResponse.getString("message"))
+                        putExtra("json_data", "Zero data received, check internet connection") // Attach JSON String as an extra
                     }
                     startActivity(intent)
+                }else{
+                    if (status == "success") {
+                        val data = jsonResponse.getJSONObject("data")
+                        val order = data.getJSONObject("order")
+                        val customer = data.getJSONObject("customer")
+                        val subsidiary = data.getJSONObject("subsidiary")
+
+                        Log.d(TAG, "First Reference $referenceNumber")
+
+                        val intent = Intent(this@PayWithTransactpay, Transactpay_start::class.java).apply {
+                            putExtra("Fname", customer.optString("firstName"))
+                            putExtra("Lname", customer.optString("lastName"))
+                            putExtra("Phone", customer.optString("mobile"))
+                            putExtra("MERCHANT_NAME", subsidiary.optString("name"))
+                            putExtra("AMOUNT", order.optString("amount"))
+                            putExtra("EMAIL", customer.optString("email"))
+                            putExtra("REF", referenceNumber)
+                            putExtra("APIKEY", apiKey)
+                            putExtra("BASEURL", baseurl)
+                            putExtra("XMLKEY", hashKey)
+                            putExtra("INITIATING_ACTIVITY_CLASS", initiatingClass)
+                            putExtra("SUCCESS", successClass)
+                            putExtra("FAILED", failureClass)
+                        }
+                        startActivity(intent)
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            // Create an Intent to start the Success Activity
+                            val intent = Intent(this@PayWithTransactpay, failureClass).apply {
+                                putExtra("json_data", jsonResponse.toString()) // Attach JSON String as an extra
+                            }
+                            startActivity(intent)
+                        }
+                    }
                 }
+
+
             }
         } catch (e: Exception) {
             Log.d(TAG, "This is the error $e")
@@ -184,6 +199,7 @@ class PayWithTransactpay : AppCompatActivity() {
 
             Log.d(TAG, "API KEY IS : $apiKey")
             Log.d(TAG, "Payload is : $payload")
+            Log.d(TAG, "Payload is : $encryptedData")
 
             val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
             val requestBody: RequestBody = json.toRequestBody(mediaType)

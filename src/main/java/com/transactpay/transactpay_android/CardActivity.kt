@@ -16,6 +16,7 @@ import com.transactpay.transactpay_android.BankTransfer.Companion.TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -37,9 +38,9 @@ class CardActivity : AppCompatActivity() {
         val email = intent.getStringExtra("EMAIL")
         val apiKey = intent.getStringExtra("API_KEY")
         val baseurl = intent.getStringExtra("BASEURL")
-        val inititingClass = intent.getStringExtra("INITIATING_ACTIVITY_CLASS") as Class<*>
-        val success = intent.getStringExtra("SUCCESS") as Class<*>
-        val failed = intent.getStringExtra("FAILED") as Class<*>
+        val initiatingClass = intent.getSerializableExtra("INITIATING_ACTIVITY_CLASS") as? Class<*>
+        val success = intent.getSerializableExtra("SUCCESS") as? Class<*>
+        val failed = intent.getSerializableExtra("FAILED") as? Class<*>
         val rsaPublicKeyXml : String = intent.getStringExtra("XMLKEY").toString()
         val reff : String = intent.getStringExtra("REFERENCE_NUMBER").toString()
 
@@ -142,14 +143,16 @@ class CardActivity : AppCompatActivity() {
 
                         if (status == "success") {
                             Log.d(TAG, "API Call Success: $jsonResponse")
+                            val data = jsonResponse.getJSONObject("data")
+                            val details = data.getJSONObject("paymentDetail")
                         } else {
-                            //redirect to failed page
-                            val intent = Intent(this@CardActivity, failed).apply {
-                                putExtra("status", jsonResponse.getString("status"))
-                                putExtra("code", jsonResponse.getString("statusCode"))
-                                putExtra("message", jsonResponse.getString("message"))
+                            withContext(Dispatchers.Main) {
+                                // Create an Intent to start the Success Activity
+                                val intent = Intent(this@CardActivity, failed).apply {
+                                    putExtra("json_data", jsonResponse.toString()) // Attach JSON String as an extra
+                                }
+                                startActivity(intent)
                             }
-                            startActivity(intent)
                         }
                 }
             } catch (e: Exception) {
@@ -188,8 +191,8 @@ class CardActivity : AppCompatActivity() {
                     "country": "NG",
                     "card": {
                         "cardnumber": "$cardNumber",
-                        "expirymonth": "$expmonth",
-                        "expiryyear": "$expYear",
+                        "expirymonth": "$expYear",
+                        "expiryyear": "$expmonth",
                         "cvv": "$cvv2"
                     }
                 }

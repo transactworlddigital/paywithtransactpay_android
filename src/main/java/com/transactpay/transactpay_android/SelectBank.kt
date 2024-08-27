@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.transactpay.transactpay_android.Transactpay_start.Companion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,11 +42,13 @@ class SelectBank : AppCompatActivity() {
         val email = intent.getStringExtra("EMAIL")
         val apiKey = intent.getStringExtra("API_KEY")
         val baseurl = intent.getStringExtra("BASEURL")
-        val inititingClass = intent.getStringExtra("INITIATING_ACTIVITY_CLASS") as Class<*>
-        val success = intent.getStringExtra("SUCCESS") as Class<*>
-        val failed = intent.getStringExtra("FAILED") as Class<*>
+        val initiatingClass = intent.getSerializableExtra("INITIATING_ACTIVITY_CLASS") as? Class<*>
+        val success = intent.getSerializableExtra("SUCCESS") as? Class<*>
+        val failed = intent.getSerializableExtra("FAILED") as? Class<*>
         val encryptKey: String = intent.getStringExtra("XMLKEY").toString()
         val referenceNumber: String = intent.getStringExtra("REFERENCE_NUMBER").toString()
+
+        Log.d(TAG, "Third Reference $referenceNumber")
 
         val amount = amountString?.toDoubleOrNull()
         val formattedAmount = amount?.let {
@@ -112,7 +115,7 @@ class SelectBank : AppCompatActivity() {
                 putExtra("BankName", bankName)
                 putExtra("BankCode", bankCode)
                 putExtra("BASEURL", baseurl)
-                putExtra("INITIATING_ACTIVITY_CLASS", inititingClass)
+                putExtra("INITIATING_ACTIVITY_CLASS", initiatingClass)
                 putExtra("SUCCESS", success)
                 putExtra("FAILED", failed)
                 putExtra("RecipientAccount", recipientAccount)
@@ -190,13 +193,13 @@ class SelectBank : AppCompatActivity() {
         url: String,
         apiKey: String,
         publicKeyXml: String,
-        reference: String,
+        referenceNumber : String,
         bankCode : String
     ): String? {
         return try {
             val payload = """
                 {
-                    "reference": "$reference",
+                    "reference": "$referenceNumber",
                     "paymentoption": "bank-transfer",
                     "country": "NG",
                     "BankTransfer": {

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.transactpay.transactpay_android.PayWithTransactpay.Companion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,11 +43,17 @@ class Transactpay_start : AppCompatActivity() {
         val email = intent.getStringExtra("EMAIL")
         val apiKey = intent.getStringExtra("APIKEY")
         val baseurl = intent.getStringExtra("BASEURL")
-        val inititingClass = intent.getStringExtra("INITIATING_ACTIVITY_CLASS") as Class<*>
-        val success = intent.getStringExtra("SUCCESS") as Class<*>
-        val failed = intent.getStringExtra("FAILED") as Class<*>
+        val initiatingClass = intent.getSerializableExtra("INITIATING_ACTIVITY_CLASS") as? Class<*>
+        val success = intent.getSerializableExtra("SUCCESS") as? Class<*>
+        val failed = intent.getSerializableExtra("FAILED") as? Class<*>
         val rsaPublicKeyXml : String = intent.getStringExtra("XMLKEY").toString()
-        val referenceNumber : String = intent.getStringExtra("REFERENCE_NUMBER").toString()
+        val referenceNumber : String = intent.getStringExtra("REF").toString()
+
+        Log.d(TAG, "Second Reference $referenceNumber")
+
+        Log.d(TAG, "Initiating class here : $initiatingClass")
+        Log.d(TAG, "success class here : $success")
+        Log.d(TAG, "failed class here : $failed")
 
         Log.d(TAG, "Encryption key is NOW NOW is : $rsaPublicKeyXml")
 
@@ -143,13 +150,13 @@ class Transactpay_start : AppCompatActivity() {
                             findViewById<TextView>(R.id.thisFee).setText(formattedAmount)
 
                         } else {
-                            //redirect to failed page
-                            val intent = Intent(this@Transactpay_start, failed).apply {
-                                putExtra("status", jsonResponse.getString("status"))
-                                putExtra("code", jsonResponse.getString("statusCode"))
-                                putExtra("message", jsonResponse.getString("message"))
+                            withContext(Dispatchers.Main) {
+                                // Create an Intent to start the Success Activity
+                                val intent = Intent(this@Transactpay_start, failed).apply {
+                                    putExtra("json_data", jsonResponse.toString()) // Attach JSON String as an extra
+                                }
+                                startActivity(intent)
                             }
-                            startActivity(intent)
                         }
                     }
                 }
@@ -184,7 +191,7 @@ class Transactpay_start : AppCompatActivity() {
                 putExtra("XMLKEY", rsaPublicKeyXml)
                 putExtra("BASEURL", baseurl)
                 putExtra("REFERENCE_NUMBER", referenceNumber)
-                putExtra("INITIATING_ACTIVITY_CLASS", inititingClass)
+                putExtra("INITIATING_ACTIVITY_CLASS", initiatingClass)
                 putExtra("SUCCESS", success)
                 putExtra("FAILED", failed)
             }
@@ -198,7 +205,7 @@ class Transactpay_start : AppCompatActivity() {
 
         //handle Cancel payment
         findViewById<TextView>(R.id.cancelPayment).setOnClickListener{
-            var intent = Intent(this@Transactpay_start, inititingClass)
+            var intent = Intent(this@Transactpay_start, initiatingClass)
             startActivity(intent)
         }
 

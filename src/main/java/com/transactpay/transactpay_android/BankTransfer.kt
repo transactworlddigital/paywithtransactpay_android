@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.transactpay.transactpay_android.Transactpay_start.Companion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -41,13 +42,14 @@ class BankTransfer : AppCompatActivity() {
         val accountNumber = intent.getStringExtra("RecipientAccount")
         val apiKey = intent.getStringExtra("API_KEY")
         val baseurl = intent.getStringExtra("BASEURL")
-        val inititingClass = intent.getStringExtra("INITIATING_ACTIVITY_CLASS") as Class<*>
-        val success = intent.getStringExtra("SUCCESS") as Class<*>
-        val failed = intent.getStringExtra("FAILED") as Class<*>
+        val initiatingClass = intent.getSerializableExtra("INITIATING_ACTIVITY_CLASS") as? Class<*>
+        val success = intent.getSerializableExtra("SUCCESS") as? Class<*>
+        val failed = intent.getSerializableExtra("FAILED") as? Class<*>
         val encryptKey: String = intent.getStringExtra("XMLKEY").toString()
         val referenceNumber: String = intent.getStringExtra("REFERENCE_NUMBER").toString()
 
         Log.d(TAG, "Encryption key is : $encryptKey")
+        Log.d(TAG, "Fourth Reference $referenceNumber")
 
         val rsaPublicKeyXml = EncryptionUtils.decodeBase64AndExtractKey(encryptKey)
 
@@ -105,6 +107,15 @@ class BankTransfer : AppCompatActivity() {
                                 startActivity(intent)
                                 finish() // Optional: finish the current activity if you don't need it anymore
                             }
+                        }else if (jObject.getString("status") == "failed"){
+                            withContext(Dispatchers.Main) {
+                                // Create an Intent to start the Success Activity
+                                val intent = Intent(this@BankTransfer, failed).apply {
+                                    putExtra("json_data", jObject.toString()) // Attach JSON String as an extra
+                                }
+                                startActivity(intent)
+                                finish()
+                            }
                         }
                     } catch (e: Exception) {
                         Log.e(TAG, "Error in Coroutine: ${e.message}")
@@ -139,12 +150,12 @@ class BankTransfer : AppCompatActivity() {
         statusUrl: String,
         apiKey: String,
         publicKeyXml: String,
-        reference: String
+        referenceNumber : String
     ): String? {
         return try {
             val orderPayload = """
                 {
-                    "reference": "$reference"
+                    "reference": "$referenceNumber"
                 }
             """.trimIndent()
 
