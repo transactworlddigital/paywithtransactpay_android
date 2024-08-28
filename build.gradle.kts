@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.library")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
     id("maven-publish")
-    id("kotlin-android")
 }
 
 android {
@@ -46,9 +46,9 @@ android {
         }
     }
 
-    lint {
-        targetSdk = 34
-    }
+//    lint {
+//        targetSdk = 34
+//    }
 
     testOptions {
         unitTests.isIncludeAndroidResources = true
@@ -130,7 +130,4 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-    // Add this line to include your library dependency
-    implementation("com.github.Omamuli-Emmanuel:paywithtransactpay_android:0.0.1")
 }
