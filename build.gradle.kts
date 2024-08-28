@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.library")
+    id("com.android.library") // Specify the version for Android library plugin
     id("org.jetbrains.kotlin.android") version "1.9.0"
-    id("maven-publish") // Make sure this is correctly applied
+    id("maven-publish") // Specify the version for Maven Publish plugin
 }
 
 android {
@@ -132,3 +132,5 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
+
+
