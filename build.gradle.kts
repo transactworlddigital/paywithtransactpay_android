@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.library")
-    id("maven-publish")
-    id("kotlin-android")
+    id("com.android.library") version "8.1.4" apply false
+    id("maven-publish") version "1.0.0" apply false
+    id("kotlin-android") version "1.9.0" apply false
 }
 
 android {
