@@ -2,6 +2,7 @@ plugins {
     id("com.android.library") // Specify the version for Android library plugin
     id("org.jetbrains.kotlin.android") version "1.9.0"
     id("maven-publish") // Specify the version for Maven Publish plugin
+    id("kotlin-android")
 }
 
 android {
