@@ -107,6 +107,8 @@ afterEvaluate {
 }
 
 dependencies {
+    implementation("com.android.tools.build:gradle:8.5.2")
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation("org.bouncycastle:bcprov-jdk15on:1.69")
