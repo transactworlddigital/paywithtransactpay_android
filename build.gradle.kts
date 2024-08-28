@@ -72,7 +72,7 @@ afterEvaluate {
                 pom {
                     name.set("Transactpay Native Android SDK")
                     description.set("Native Android SDK for Transactpay, built with Kotlin")
-                    url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay")
+                    url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android.git")
 
                     licenses {
                         license {
@@ -90,9 +90,9 @@ afterEvaluate {
                     }
 
                     scm {
-                        connection.set("scm:git:github.com/Omamuli-Emmanuel/paywithtransactpay.git")
-                        developerConnection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay.git")
-                        url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay")
+                        connection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
+                        developerConnection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
+                        url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android.git")
                     }
                 }
             }
