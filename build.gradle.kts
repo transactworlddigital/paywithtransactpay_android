@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android") version "1.9.0"
     id("maven-publish")
+    id("kotlin-android")
 }
 
 android {
@@ -65,50 +65,52 @@ tasks.register<Wrapper>("wrapper") {
     gradleVersion = "8.1"
 }
 
-//publishing {
-//    publications {
-//        create<MavenPublication>("release") {
-//            from(components["release"])
-//
-//            groupId = "com.github.Omamuli-Emmanuel"
-//            artifactId = "pay_with_transact_pay"
-//            version = "0.0.1"
-//
-//            pom {
-//                name.set("Transactpay Native Android SDK")
-//                description.set("Native Android SDK for Transactpay, built with Kotlin")
-//                url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android")
-//
-//                licenses {
-//                    license {
-//                        name.set("The Apache License, Version 2.0")
-//                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-//                    }
-//                }
-//
-//                developers {
-//                    developer {
-//                        id.set("Omamuli-Emmanuel")
-//                        name.set("Emmanuel Omamuli")
-//                        email.set("omamuli.emmanuel@gmail.com")
-//                    }
-//                }
-//
-//                scm {
-//                    connection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
-//                    developerConnection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
-//                    url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android")
-//                }
-//            }
-//        }
-//    }
-//
-//    repositories {
-//        maven {
-//            url = uri("https://jitpack.io")
-//        }
-//    }
-//}
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+
+                groupId = "com.github.Omamuli-Emmanuel"
+                artifactId = "pay_with_transact_pay"
+                version = "0.0.1"
+
+                pom {
+                    name.set("Transactpay Native Android SDK")
+                    description.set("Native Android SDK for Transactpay, built with Kotlin")
+                    url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android")
+
+                    licenses {
+                        license {
+                            name.set("The Apache License, Version 2.0")
+                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set("Omamuli-Emmanuel")
+                            name.set("Emmanuel Omamuli")
+                            email.set("omamuli.emmanuel@gmail.com")
+                        }
+                    }
+
+                    scm {
+                        connection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
+                        developerConnection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
+                        url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android")
+                    }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                url = uri("https://jitpack.io")
+            }
+        }
+    }
+}
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
@@ -134,4 +136,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    // Add this line to include your library dependency
+    implementation("com.github.Omamuli-Emmanuel:paywithtransactpay_android:0.0.1")
 }
