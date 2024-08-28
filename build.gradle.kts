@@ -1,6 +1,7 @@
 plugins {
-    id("com.android.library") // Specify the version for Android library plugin
+    id("com.android.library")
     id("org.jetbrains.kotlin.android") version "1.9.0"
+    id("maven-publish")
 }
 
 android {
@@ -19,6 +20,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
         }
     }
 
@@ -58,56 +65,52 @@ tasks.register<Wrapper>("wrapper") {
     gradleVersion = "8.1"
 }
 
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            create<MavenPublication>("release") {
-//                from(components["release"])
+//publishing {
+//    publications {
+//        create<MavenPublication>("release") {
+//            from(components["release"])
 //
-//                groupId = "com.github.Omamuli-Emmanuel"
-//                artifactId = "pay_with_transact_pay"
-//                version = "0.0.1"
+//            groupId = "com.github.Omamuli-Emmanuel"
+//            artifactId = "pay_with_transact_pay"
+//            version = "0.0.1"
 //
-//                pom {
-//                    name.set("Transactpay Native Android SDK")
-//                    description.set("Native Android SDK for Transactpay, built with Kotlin")
-//                    url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android.git")
+//            pom {
+//                name.set("Transactpay Native Android SDK")
+//                description.set("Native Android SDK for Transactpay, built with Kotlin")
+//                url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android")
 //
-//                    licenses {
-//                        license {
-//                            name.set("The Apache License, Version 2.0")
-//                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-//                        }
+//                licenses {
+//                    license {
+//                        name.set("The Apache License, Version 2.0")
+//                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
 //                    }
+//                }
 //
-//                    developers {
-//                        developer {
-//                            id.set("Omamuli-Emmanuel")
-//                            name.set("Emmanuel Omamuli")
-//                            email.set("omamuli.emmanuel@gmail.com")
-//                        }
+//                developers {
+//                    developer {
+//                        id.set("Omamuli-Emmanuel")
+//                        name.set("Emmanuel Omamuli")
+//                        email.set("omamuli.emmanuel@gmail.com")
 //                    }
+//                }
 //
-//                    scm {
-//                        connection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
-//                        developerConnection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
-//                        url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android.git")
-//                    }
+//                scm {
+//                    connection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
+//                    developerConnection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
+//                    url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android")
 //                }
 //            }
 //        }
+//    }
 //
-//        repositories {
-//            maven {
-//                url = uri("https://jitpack.io")
-//            }
+//    repositories {
+//        maven {
+//            url = uri("https://jitpack.io")
 //        }
 //    }
 //}
 
 dependencies {
-    implementation("com.android.tools.build:gradle:8.5.2")
-
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation("org.bouncycastle:bcprov-jdk15on:1.69")
@@ -123,7 +126,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3:1.1.0")
-    implementation(libs.androidx.appcompat)
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -133,5 +135,3 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
-
-
