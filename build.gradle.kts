@@ -83,16 +83,16 @@ afterEvaluate {
 
                     developers {
                         developer {
-                            id.set("Omamuli-Emmanuel")
-                            name.set("Emmanuel Omamuli")
-                            email.set("omamuli.emmanuel@gmail.com")
+                            id.set("transactworlddigital")
+                            name.set("Transactworld Digital")
+                            email.set("techsupport@transctworlddigital.com")
                         }
                     }
 
                     scm {
-                        connection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
-                        developerConnection.set("scm:git@github.com:Omamuli-Emmanuel/paywithtransactpay_android.git")
-                        url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android")
+                        connection.set("scm:git@github.com:transactworlddigital/paywithtransactpay_android")
+                        developerConnection.set("scm:git@github.com:transactworlddigital/paywithtransactpay_android.git")
+                        url.set(https://github.com/transactworlddigital/paywithtransactpay_android")
                     }
                 }
             }
