@@ -65,14 +65,14 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 from(components["release"])
 
-                groupId = "com.github.Omamuli-Emmanuel"
+                groupId = "com.github.transactworlddigital"
                 artifactId = "pay_with_transact_pay"
                 version = "0.0.1"
 
                 pom {
                     name.set("Transactpay Native Android SDK")
                     description.set("Native Android SDK for Transactpay, built with Kotlin")
-                    url.set("https://github.com/Omamuli-Emmanuel/paywithtransactpay_android")
+                    url.set("https://github.com/transactworlddigital/paywithtransactpay_android")
 
                     licenses {
                         license {
